@@ -62,7 +62,7 @@ async function callAnthropic(system: string, user: string): Promise<string> {
 // Any OpenAI-compatible endpoint. Groq and Google Gemini both offer a free tier
 // (no card needed), so the prototype can run at zero cost.
 const PROVIDERS = {
-  groq: { key: "GROQ_API_KEY", base: "https://api.groq.com/openai/v1", model: "llama-3.3-70b-versatile", json: true },
+  groq: { key: "GROQ_API_KEY", base: "https://api.groq.com/openai/v1", model: "openai/gpt-oss-20b", json: false },
   gemini: { key: "GEMINI_API_KEY", base: "https://generativelanguage.googleapis.com/v1beta/openai", model: "gemini-2.5-flash", json: false },
   openai: { key: "OPENAI_API_KEY", base: "https://api.openai.com/v1", model: "gpt-4o-mini", json: true },
 } as const;
@@ -83,7 +83,10 @@ async function callOpenAICompatible(name: ProviderName, system: string, user: st
     body: JSON.stringify({
       model: process.env.AI_MODEL || p.model,
       temperature: 0.2,
+      max_tokens: 1200,
       ...(p.json ? { response_format: { type: "json_object" } } : {}),
+      // Open reasoning models on Groq: keep thinking short so replies stay fast and inside free limits.
+      ...(name === "groq" ? { reasoning_effort: "low" } : {}),
       messages: [
         { role: "system", content: system },
         { role: "user", content: user },

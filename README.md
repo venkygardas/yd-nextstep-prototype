@@ -19,7 +19,7 @@ With no key, the app still works using its rule-based fallback, so the demo neve
 1. Push this folder to a new GitHub repo (or run `npx vercel` from this folder).
 2. On vercel.com: **Add New → Project → Import** the repo. Framework is detected as Next.js. No build settings to change.
 3. In **Settings → Environment Variables**, add ONE free key (no credit card needed):
-   - `GROQ_API_KEY` from https://console.groq.com/keys (default model `llama-3.3-70b-versatile`), or
+   - `GROQ_API_KEY` from https://console.groq.com/keys (default model `openai/gpt-oss-20b`), or
    - `GEMINI_API_KEY` from https://aistudio.google.com/apikey (default model `gemini-2.5-flash`)
    - Paid options also work: `OPENAI_API_KEY` or `ANTHROPIC_API_KEY`. `AI_MODEL` overrides the model name.
 4. Redeploy. Open the link and use "Show behind the scenes" at the bottom to confirm `"source": "ai"`.
